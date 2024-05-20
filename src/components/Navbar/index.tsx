@@ -1,12 +1,19 @@
+// import { useState } from "react";
 import "./index.scss";
 
 interface IProps {
   companyName: string;
   aboutTxt: string;
-  loginTxt: string;
+  isLoggedIn: boolean;
+  setIsLoggedIn: (value: boolean) => void;
 }
 
-function Navbar({ companyName, aboutTxt, loginTxt }: IProps) {
+function Navbar({ companyName, aboutTxt, setIsLoggedIn, isLoggedIn }: IProps) {
+  // const [login, setLogin] = useState("login".toUpperCase());
+  //* -- function to change state of user
+  const handelUserClick = () => {
+    setIsLoggedIn(!isLoggedIn);
+  };
   return (
     <div className="navbar ">
       <ul className="container">
@@ -23,7 +30,9 @@ function Navbar({ companyName, aboutTxt, loginTxt }: IProps) {
           <a href="/">Contact</a>
         </li>
         <li>
-          <button>{loginTxt}</button>
+          <button onClick={handelUserClick}>
+            {isLoggedIn ? "logout" : "login"}
+          </button>
         </li>
       </ul>
     </div>
