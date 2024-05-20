@@ -1,6 +1,7 @@
 import { ChangeEvent } from "react";
 import "./index.scss";
-import { IUserData } from "../../interfaces";
+import { IUserData, IFormInput } from "../../interfaces";
+import { formInputList as data } from "../../data/index";
 interface IChangeUi {
   isLoggedIn: boolean;
   setIsLoggedIn: (v: boolean) => void;
@@ -23,6 +24,21 @@ function RegisterForm({
     setUserData({ ...userData, [name]: value });
   };
 
+  const allFormInputs = data.map((element: IFormInput) => {
+    return (
+      <div className="input-wrapper" key={element.id}>
+        <label htmlFor={element.id}>{element.label}</label>
+        <input
+          type={element.type}
+          name={element.name}
+          id={element.id}
+          value={userData[element.name]}
+          onChange={onChangeHandler}
+        />
+      </div>
+    );
+  });
+
   return (
     <form
       className="container"
@@ -30,18 +46,8 @@ function RegisterForm({
         e.preventDefault();
       }}
     >
-      <div className="input-wrapper">
-        <label htmlFor="email">email</label>
-        <input
-          placeholder="Enter your email"
-          type="email"
-          name="email"
-          id="email"
-          value={userData.email}
-          onChange={onChangeHandler}
-        />
-      </div>
-      <div className="input-wrapper">
+      {allFormInputs}
+      {/* <div className="input-wrapper">
         <label htmlFor="name">name</label>
         <input
           onChange={onChangeHandler}
@@ -84,7 +90,7 @@ function RegisterForm({
           name="phone"
           id="phone"
         />
-      </div>
+      </div> */}
       <button
         onClick={() => {
           setIsLoggedIn(true);
