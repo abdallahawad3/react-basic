@@ -11,6 +11,12 @@ form {
       font-size: 17px;
       font-weight: bold;
     }
+    .input-group {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      gap: 10px;
+    }
     input {
       width: 100%;
       background-color: transparent;
@@ -20,5 +26,18 @@ form {
       border-radius: 5px;
       font-size: 17px;
     }
+    span {
+      border: 2px solid #344c64;
+      padding: 15px;
+      border-radius: 5px;
+      cursor: pointer;
+      background-color: transparent;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .input-group {
+    flex-wrap: wrap;
   }
 }

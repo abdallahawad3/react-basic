@@ -1,4 +1,4 @@
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 import "./index.scss";
 import { IUserData, IFormInput } from "../../interfaces";
 import { formInputList as data } from "../../data/index";
@@ -15,6 +15,7 @@ function RegisterForm({
   setUserData,
   userData,
 }: IChangeUi) {
+  const [mapData, setData] = useState(data);
   //* -- Handlers
   //*  ❗❗❗❗ When i send event as a props the type of var is an  🔃 ChangeEvent<HTMLInputElement> 🔃  **//
   const onChangeHandler = (event: ChangeEvent<HTMLInputElement>) => {
@@ -24,17 +25,37 @@ function RegisterForm({
     setUserData({ ...userData, [name]: value });
   };
 
-  const allFormInputs = data.map((element: IFormInput) => {
+  //* -- function to delete element from array
+  const handelDelete = (id: string) => {
+    const newElement = mapData.filter((element) => {
+      return element.id !== id;
+    });
+
+    setData(newElement);
+    console.log(newElement);
+  };
+
+  const allFormInputs = mapData.map((element: IFormInput) => {
     return (
       <div className="input-wrapper" key={element.id}>
         <label htmlFor={element.id}>{element.label}</label>
-        <input
-          type={element.type}
-          name={element.name}
-          id={element.id}
-          value={userData[element.name]}
-          onChange={onChangeHandler}
-        />
+        <div className="input-group">
+          <input
+            type={element.type}
+            name={element.name}
+            id={element.id}
+            value={userData[element.name]}
+            onChange={onChangeHandler}
+          />{" "}
+          <span
+            onClick={() => {
+              handelDelete(element.id);
+              // console.log(element.id);
+            }}
+          >
+            ❗❌
+          </span>
+        </div>
       </div>
     );
   });
